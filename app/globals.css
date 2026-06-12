@@ -1,26 +1,68 @@
 @import "tailwindcss";
 
+/* ─── DA Design Tokens ─────────────────────────────────────────── */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg:       #09090e;
+  --surface:  #0e0e15;
+  --surface2: #13131c;
+  --border:   rgba(255, 255, 255, 0.06);
+  --text:     #ede8df;
+  --muted:    #6b665f;
+  --muted2:   #9c9590;
+  --accent:   #c8f060;
 }
 
+/* ─── Tailwind v4 Theme ────────────────────────────────────────── */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  /* Colors — utilities: bg-bg, text-accent, border-border, etc. */
+  --color-bg:       var(--bg);
+  --color-surface:  var(--surface);
+  --color-surface2: var(--surface2);
+  --color-border:   var(--border);
+  --color-text:     var(--text);
+  --color-muted:    var(--muted);
+  --color-muted2:   var(--muted2);
+  --color-accent:   var(--accent);
+
+  /* Fonts — utilities: font-display, font-serif, font-mono, font-body */
+  --font-display: var(--font-bebas);
+  --font-serif:   var(--font-dm-serif);
+  --font-mono:    var(--font-dm-mono);
+  --font-body:    var(--font-instrument);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* ─── Base ─────────────────────────────────────────────────────── */
+html {
+  background-color: var(--bg);
+  color: var(--text);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-instrument), system-ui, sans-serif;
+  min-height: 100dvh;
+}
+
+/* ─── Custom cursor — cache le curseur natif sur desktop ───────── */
+@media (hover: hover) and (pointer: fine) {
+  * {
+    cursor: none !important;
+  }
+}
+
+/* ─── Smooth scroll natif fallback ─────────────────────────────── */
+html {
+  scroll-behavior: smooth;
+}
+
+/* ─── Focus visible accessible ─────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+/* ─── Selection color ───────────────────────────────────────────── */
+::selection {
+  background: var(--accent);
+  color: var(--bg);
 }

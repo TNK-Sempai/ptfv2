@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "about": "À propos",
+    "projects": "Projets",
+    "skills": "Skills",
+    "widgets": "1001 Widgets",
+    "contact": "Contact",
+    "projects_list": {
+      "chessbot": "TanukiChessBot",
+      "opti_troc": "Opti-Troc",
+      "yummr": "Yummr",
+      "big_factory": "Big Factory",
+      "time_event": "Time-Event.ch"
+    }
+  },
+  "meta": {
+    "home_title": "Tanuki Corporation — Dev Senior",
+    "home_description": "Portfolio de développeur senior — tanuki-corporation.com"
+  },
+  "hero": {
+    "label": "Développeur Full-Stack Senior",
+    "eyebrow": "Développeur Senior",
+    "title": "SEMPAÏ",
+    "subtitle": "Je construis des expériences web qui marquent.",
+    "cta_projects": "Voir les projets",
+    "cta_widgets": "1001 Widgets",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "label": "À propos",
+    "eyebrow": "01 — Qui suis-je",
+    "title": "À propos",
+    "description": "Développeur Full-Stack senior basé en France. Je conçois et réalise des interfaces web performantes, accessibles et animées — du design système au déploiement production.",
+    "cv_cta": "Télécharger le CV",
+    "availability": "Disponible pour missions freelance"
+  },
+  "projects": {
+    "label": "Projets",
+    "eyebrow": "03 — Ce que j'ai construit",
+    "title": "Projets",
+    "cta": "Voir le projet",
+    "status_live": "Live",
+    "status_wip": "En dev",
+    "status_soon": "Bientôt"
+  },
+  "skills": {
+    "label": "Skills",
+    "eyebrow": "02 — Mon arsenal",
+    "title": "Skills",
+    "description": "Stack technique, outils et compétences acquis en production. Chaque niveau reflète une utilisation réelle sur des projets livrés.",
+    "cat_frontend": "Frontend",
+    "cat_backend": "Backend",
+    "cat_marketing": "Marketing",
+    "cat_tools": "Outils"
+  },
+  "widgets": {
+    "label": "1001 Widgets",
+    "eyebrow": "04 — Pour les devs juniors",
+    "title": "1001 Widgets",
+    "filter_all": "Tous",
+    "badge_beginner": "Débutant",
+    "badge_intermediate": "Intermédiaire",
+    "badge_advanced": "Avancé",
+    "suggest": "Proposer un widget",
+    "vote": "Voter",
+    "empty": "Aucun widget pour le moment.",
+    "suggest_title": "Manque quelque chose ?",
+    "suggest_description": "Propose un widget — si 10 personnes votent, je le construis."
+  },
+  "contact": {
+    "label": "Contact",
+    "eyebrow": "05 — Travaillons ensemble",
+    "title": "Contact",
+    "heading": "TRAVAILLONS ENSEMBLE.",
+    "subtitle": "Missions freelance et collaborations.",
+    "cta": "Envoyer un message",
+    "cta_email": "Envoyer un email",
+    "cta_linkedin": "LinkedIn",
+    "cta_github": "GitHub"
+  },
+  "admin": {
+    "login": "Connexion admin",
+    "password": "Mot de passe",
+    "submit": "Se connecter",
+    "logout": "Déconnexion"
+  }
+}

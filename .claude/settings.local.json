@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm install *)",
+      "Bash(npm list *)",
+      "Bash(node -e \"const m = require\\('next-intl'\\); console.log\\(Object.keys\\(m\\)\\)\")",
+      "Bash(node -e \"const {getRequestConfig} = require\\('next-intl/server'\\); console.log\\(getRequestConfig.toString\\(\\).slice\\(0,200\\)\\)\")",
+      "Bash(node -e \"const {defineRouting} = require\\('next-intl/routing'\\); console.log\\(typeof defineRouting\\)\")",
+      "Bash(npx tsc *)",
+      "Bash(npm run *)"
+    ]
+  }
+}

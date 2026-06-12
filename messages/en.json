@@ -1,0 +1,87 @@
+{
+  "nav": {
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "widgets": "1001 Widgets",
+    "contact": "Contact",
+    "projects_list": {
+      "chessbot": "TanukiChessBot",
+      "opti_troc": "Opti-Troc",
+      "yummr": "Yummr",
+      "big_factory": "Big Factory",
+      "time_event": "Time-Event.ch"
+    }
+  },
+  "meta": {
+    "home_title": "Tanuki Corporation — Senior Developer",
+    "home_description": "Senior developer portfolio — tanuki-corporation.com"
+  },
+  "hero": {
+    "label": "Senior Full-Stack Developer",
+    "eyebrow": "Senior Developer",
+    "title": "SEMPAÏ",
+    "subtitle": "I build web experiences that leave a mark.",
+    "cta_projects": "See projects",
+    "cta_widgets": "1001 Widgets",
+    "scroll": "Scroll"
+  },
+  "about": {
+    "label": "About",
+    "eyebrow": "01 — Who I am",
+    "title": "About",
+    "description": "Senior Full-Stack developer based in France. I design and build performant, accessible, animated web interfaces — from design systems to production deployment.",
+    "cv_cta": "Download CV",
+    "availability": "Available for freelance missions"
+  },
+  "projects": {
+    "label": "Projects",
+    "eyebrow": "03 — What I've built",
+    "title": "Projects",
+    "cta": "View project",
+    "status_live": "Live",
+    "status_wip": "In dev",
+    "status_soon": "Coming soon"
+  },
+  "skills": {
+    "label": "Skills",
+    "eyebrow": "02 — My arsenal",
+    "title": "Skills",
+    "description": "Technical stack, tools and skills built in production. Each level reflects real usage on delivered projects.",
+    "cat_frontend": "Frontend",
+    "cat_backend": "Backend",
+    "cat_marketing": "Marketing",
+    "cat_tools": "Tools"
+  },
+  "widgets": {
+    "label": "1001 Widgets",
+    "eyebrow": "04 — For junior devs",
+    "title": "1001 Widgets",
+    "filter_all": "All",
+    "badge_beginner": "Beginner",
+    "badge_intermediate": "Intermediate",
+    "badge_advanced": "Advanced",
+    "suggest": "Suggest a widget",
+    "vote": "Vote",
+    "empty": "No widgets yet.",
+    "suggest_title": "Missing something?",
+    "suggest_description": "Suggest a widget — if 10 people vote, I'll build it."
+  },
+  "contact": {
+    "label": "Contact",
+    "eyebrow": "05 — Let's work together",
+    "title": "Contact",
+    "heading": "LET'S WORK TOGETHER.",
+    "subtitle": "Freelance missions and collaborations.",
+    "cta": "Send a message",
+    "cta_email": "Send an email",
+    "cta_linkedin": "LinkedIn",
+    "cta_github": "GitHub"
+  },
+  "admin": {
+    "login": "Admin login",
+    "password": "Password",
+    "submit": "Sign in",
+    "logout": "Log out"
+  }
+}
