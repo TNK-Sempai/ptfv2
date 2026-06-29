@@ -3,14 +3,14 @@
 /**
  * Texture grain fixe — superposée en pointer-events:none sur tout le site.
  * Monter dans app/[locale]/layout.tsx, avant la fermeture de <body>.
- * Opacité réglable via la prop `opacity` (défaut 0.035).
+ * Opacité réglable via la prop `opacity` (défaut 0.07).
  */
 
 interface NoiseOverlayProps {
   opacity?: number
 }
 
-export function NoiseOverlay({ opacity = 0.035 }: NoiseOverlayProps) {
+export function NoiseOverlay({ opacity = 0.07 }: NoiseOverlayProps) {
   return (
     <div
       aria-hidden="true"

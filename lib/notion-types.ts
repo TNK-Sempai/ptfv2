@@ -60,6 +60,8 @@ export interface NotionWidgetProperties {
   languages:     Extract<NotionPropValue, { type: 'multi_select' }>
   difficulty:    Extract<NotionPropValue, { type: 'select' }>
   description:   Extract<NotionPropValue, { type: 'rich_text' }>
+  longDescription: Extract<NotionPropValue, { type: 'rich_text' }>
+  code:          Extract<NotionPropValue, { type: 'rich_text' }>
   demoComponent: Extract<NotionPropValue, { type: 'rich_text' }>
   status:        Extract<NotionPropValue, { type: 'select' }>
   votes:         Extract<NotionPropValue, { type: 'number' }>

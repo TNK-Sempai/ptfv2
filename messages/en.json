@@ -67,6 +67,15 @@
     "suggest_title": "Missing something?",
     "suggest_description": "Suggest a widget — if 10 people vote, I'll build it."
   },
+  "comments": {
+    "form_name": "First name",
+    "form_message": "Your message",
+    "form_submit": "Post",
+    "form_pending": "Comment awaiting moderation.",
+    "form_error": "Something went wrong. Please try again.",
+    "list_empty": "No comments yet. Be the first!",
+    "list_title": "Comments"
+  },
   "contact": {
     "label": "Contact",
     "eyebrow": "05 — Let's work together",

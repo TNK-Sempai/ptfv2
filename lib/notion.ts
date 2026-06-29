@@ -28,6 +28,12 @@ import type {
 
 // ─── Client singleton ─────────────────────────────────────────────────────────
 
+// En dev : revalidate false → pas de cache, changements Notion visibles immédiatement.
+// En prod : revalidate ISR_REVALIDATE (3600) → cache 1h.
+// unstable_cache n'accepte pas 0 → false pour désactiver le cache.
+const isDev = process.env.NODE_ENV === 'development'
+const REVALIDATE: number | false = isDev ? false : ISR_REVALIDATE
+
 const notion = new Client({
   auth: process.env.NOTION_API_KEY,
 })
@@ -143,7 +149,10 @@ function parseWidget(page: NotionPage): Widget {
     languages:     parseMultiSelect(p['languages']),
     difficulty:    (parseSelect(p['difficulty']) ?? 'Débutant') as WidgetDifficulty,
     description:   parseRichText(p['description']),
+    longDescription: parseRichText(p['longDescription']),
+    code:          parseRichText(p['code']) || null,
     demoComponent: parseRichText(p['demoComponent']) || null,
+    upgrade:       parseRichText(p['upgrade']) || null,
     status:        (parseSelect(p['status']) ?? 'draft') as WidgetStatus,
     votes:         parseNumber(p['votes']),
     views:         parseNumber(p['views']),
@@ -200,7 +209,7 @@ export const getProjects = unstable_cache(
     return toNotionPages(response.results).map(parseProject)
   },
   ['projects'],
-  { revalidate: ISR_REVALIDATE, tags: ['projects'] }
+  { revalidate: REVALIDATE, tags: ['projects'] }
 )
 
 export async function getFeaturedProjects(): Promise<Project[]> {
@@ -228,7 +237,7 @@ export const getWidgets = unstable_cache(
     return toNotionPages(response.results).map(parseWidget)
   },
   ['widgets'],
-  { revalidate: ISR_REVALIDATE, tags: ['widgets'] }
+  { revalidate: REVALIDATE, tags: ['widgets'] }
 )
 
 export async function getWidgetBySlug(slug: string): Promise<Widget | null> {
@@ -252,7 +261,7 @@ export const getSkills = unstable_cache(
     return toNotionPages(response.results).map(parseSkill)
   },
   ['skills'],
-  { revalidate: ISR_REVALIDATE, tags: ['skills'] }
+  { revalidate: REVALIDATE, tags: ['skills'] }
 )
 
 export async function getSkillsByCategory(category: SkillCategory): Promise<Skill[]> {
@@ -284,7 +293,7 @@ const _getCommentsCached = unstable_cache(
     return toNotionPages(response.results).map(parseComment)
   },
   ['comments'],
-  { revalidate: ISR_REVALIDATE, tags: ['comments'] }
+  { revalidate: REVALIDATE, tags: ['comments'] }
 )
 
 export const getComments = _getCommentsCached
@@ -316,7 +325,7 @@ export const getSuggestions = unstable_cache(
     return toNotionPages(response.results).map(parseSuggestion)
   },
   ['suggestions'],
-  { revalidate: ISR_REVALIDATE, tags: ['suggestions'] }
+  { revalidate: REVALIDATE, tags: ['suggestions'] }
 )
 
 export async function createSuggestion(data: NotionSuggestionInput): Promise<Suggestion> {
@@ -338,25 +347,26 @@ export async function createSuggestion(data: NotionSuggestionInput): Promise<Sug
 export async function voteForSuggestion(
   id: string,
   ipHash: string
-): Promise<{ success: boolean; alreadyVoted: boolean }> {
+): Promise<{ success: boolean; alreadyVoted: boolean; newTotal: number }> {
   const raw = await notion.pages.retrieve({ page_id: id })
-  if (!isNotionPage(raw)) return { success: false, alreadyVoted: false }
+  if (!isNotionPage(raw)) return { success: false, alreadyVoted: false, newTotal: 0 }
 
   const suggestion = parseSuggestion(raw)
 
   if (suggestion.voters.includes(ipHash)) {
-    return { success: false, alreadyVoted: true }
+    return { success: false, alreadyVoted: true, newTotal: suggestion.votes }
   }
 
+  const newTotal = suggestion.votes + 1
   const newVoters = [...suggestion.voters, ipHash]
 
   await notion.pages.update({
     page_id: id,
     properties: {
-      votes:  { number: suggestion.votes + 1 },
+      votes:  { number: newTotal },
       voters: { rich_text: [{ text: { content: JSON.stringify(newVoters) } }] },
     },
   })
 
-  return { success: true, alreadyVoted: false }
+  return { success: true, alreadyVoted: false, newTotal }
 }

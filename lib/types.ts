@@ -32,7 +32,10 @@ export interface Widget {
   languages: string[]
   difficulty: WidgetDifficulty
   description: string
+  longDescription: string
+  code: string | null
   demoComponent: string | null
+  upgrade?: string | null
   status: WidgetStatus
   votes: number
   views: number

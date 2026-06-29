@@ -10,6 +10,8 @@
   --muted:    #6b665f;
   --muted2:   #9c9590;
   --accent:   #c8f060;
+  --blue:     rgba(100, 140, 255, 1);
+  --red:      #f06060;
 }
 
 /* ─── Tailwind v4 Theme ────────────────────────────────────────── */
@@ -23,6 +25,8 @@
   --color-muted:    var(--muted);
   --color-muted2:   var(--muted2);
   --color-accent:   var(--accent);
+  --color-blue:     var(--blue);
+  --color-red:      var(--red);
 
   /* Fonts — utilities: font-display, font-serif, font-mono, font-body */
   --font-display: var(--font-bebas);
@@ -39,13 +43,48 @@ html {
 
 body {
   font-family: var(--font-instrument), system-ui, sans-serif;
+  background-color: var(--bg);
   min-height: 100dvh;
+  overflow-x: hidden;
 }
 
 /* ─── Custom cursor — cache le curseur natif sur desktop ───────── */
 @media (hover: hover) and (pointer: fine) {
   * {
     cursor: none !important;
+  }
+
+  body {
+    cursor: none;
+  }
+}
+
+/* ─── Reveal fallback — anti-FOUC / escape hatch ────────────────── */
+/*
+ * .reveal-fallback — force un élément à son état révélé.
+ * Opt-in : à ajouter sur un élément précis bloqué à opacity:0 (ex. si un
+ * IntersectionObserver ne se déclenche jamais). Le !important écrase les
+ * styles inline posés par les hooks reveal (useStaggerReveal/useTextReveal).
+ * NE PAS poser globalement sur tous les éléments animés → casserait les anims.
+ */
+.reveal-fallback {
+  opacity: 1 !important;
+  transform: none !important;
+}
+
+/* ─── Espacement sections ───────────────────────────────────────── */
+/*
+ * .section — rythme vertical fort (min 8rem) + gouttière horizontale.
+ * Mobile-first : marges latérales réduites, élargies en ≥768px.
+ */
+.section {
+  padding-block: 8rem;
+  padding-inline: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .section {
+    padding-inline: 3.5rem;
   }
 }
 
@@ -65,4 +104,475 @@ html {
 ::selection {
   background: var(--accent);
   color: var(--bg);
+}
+
+/* ─── Card shine effect ─────────────────────────────────────────── */
+/*
+ * .card-shine — reflet diagonal balayant au hover.
+ * Requiert overflow-hidden sur l'élément.
+ * will-change : uniquement activé via ::before pendant le hover.
+ * Tokens utilisés : var(--accent), var(--border).
+ */
+.card-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.card-shine::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    color-mix(in srgb, var(--accent) 8%, transparent) 50%,
+    transparent 70%
+  );
+  transform: translateX(-100%);
+  transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+  z-index: 1;
+}
+
+.card-shine:hover::before {
+  transform: translateX(100%);
+}
+
+/* ─── Pill glow ──────────────────────────────────────────────────── */
+/*
+ * .pill-glow — halo doux autour d'un badge pill.
+ * Tokens utilisés : var(--accent), var(--border).
+ * Pas de will-change permanent.
+ */
+.pill-glow {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 20%, transparent),
+    0 0 8px 0   color-mix(in srgb, var(--accent) 10%, transparent);
+  transition:
+    box-shadow 0.25s ease,
+    color      0.25s ease,
+    border-color 0.25s ease;
+}
+
+.pill-glow:hover {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent),
+    0 0 16px 2px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * PAGES PROJETS — sections, architecture, features, stack, avatars
+ * Tokens DA uniquement. Mobile-first → enrichi en ≥768px.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. Sections alternées image ⟷ texte ──────────────────────── */
+/*
+ * .proj-section-grid — empilé en mobile, 2 colonnes en desktop.
+ * .reverse — inverse l'ordre des colonnes (image à droite).
+ */
+.proj-section-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  align-items: center;
+}
+
+@media (min-width: 768px) {
+  .proj-section-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .proj-section-grid.reverse > :first-child {
+    order: 2;
+  }
+
+  .proj-section-grid.reverse > :last-child {
+    order: 1;
+  }
+}
+
+/* ─── 2. Architecture flow ─────────────────────────────────────── */
+/*
+ * .arch-flow — suite de nœuds reliés, wrap centré.
+ * .arch-node.highlight — nœud accentué (entrée/sortie clé).
+ * .arch-arrow — séparateur discret entre deux nœuds.
+ */
+.arch-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+}
+
+.arch-node {
+  padding: 0.6rem 1.1rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.04em;
+  color: var(--text);
+  white-space: nowrap;
+}
+
+.arch-node.highlight {
+  border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  color: var(--accent);
+}
+
+.arch-arrow {
+  color: var(--muted);
+  user-select: none;
+}
+
+/* ─── 3. Feature cards ─────────────────────────────────────────── */
+/*
+ * .feat-card — carte descriptive, accent au hover.
+ */
+.feat-card {
+  padding: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  transition: border-color 0.25s ease, background 0.25s ease;
+}
+
+.feat-card:hover {
+  border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+}
+
+/* ─── 4. Stack grid ────────────────────────────────────────────── */
+/*
+ * .stack-grid — liste technique en grille serrée (gap 2px).
+ * 1 colonne mobile → 3 colonnes desktop.
+ * .stack-item — barre latérale révélée au hover.
+ */
+.stack-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2px;
+}
+
+@media (min-width: 768px) {
+  .stack-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.stack-item {
+  padding: 1rem 1.25rem;
+  background: var(--surface);
+  border-left: 2px solid transparent;
+  transition: border-left-color 0.25s ease, background 0.25s ease;
+}
+
+.stack-item:hover {
+  border-left-color: var(--accent);
+  background: var(--surface2);
+}
+
+/* ─── 5. Avatar cards ──────────────────────────────────────────── */
+/*
+ * .avatar-card — vignette membre/projet, badge en surimpression.
+ * .avatar-badge — pastille statut (accent par défaut).
+ * .avatar-badge.soon — statut neutre « bientôt ».
+ */
+.avatar-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.avatar-badge {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  padding: 0.25rem 0.7rem;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 999px;
+  font-family: var(--font-display), sans-serif;
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+.avatar-badge.soon {
+  background: var(--surface2);
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * VIE VISUELLE — dividers, eyebrows, corners, timeline, process
+ * Accent toujours via color-mix(var(--accent)) — jamais de rgba hardcodé.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── 1. Séparateur de section ─────────────────────────────────── */
+.section-divider {
+  border-top: 1px solid var(--border);
+}
+
+/* ─── 2. Label numéroté (eyebrow) ──────────────────────────────── */
+.eyebrow-label {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 1.2rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.68rem;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.eyebrow-label::after {
+  content: '';
+  flex: 1;
+  max-width: 60px;
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* ─── 3. Corner brackets ───────────────────────────────────────── */
+/* Conteneur parent : position relative + overflow visible. */
+.corner-tl,
+.corner-tr,
+.corner-bl,
+.corner-br {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-color: color-mix(in srgb, var(--accent) 25%, transparent);
+  border-style: solid;
+}
+
+.corner-tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
+.corner-tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+.corner-bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+.corner-br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+/* ─── 4. Timeline ──────────────────────────────────────────────── */
+.timeline-item {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1.5rem;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.timeline-year {
+  padding-top: 0.2rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+}
+
+/* ─── 5. Process — numéro contour ──────────────────────────────── */
+.process-number {
+  margin-bottom: 1.5rem;
+  font-family: var(--font-display), sans-serif;
+  font-size: 4rem;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px color-mix(in srgb, var(--accent) 15%, transparent);
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * FONTS — force d'application (escape hatch spécificité / anti-FOUC)
+ * Les variables next/font sont déjà sur <html> et mappées en @theme inline.
+ * Ces règles garantissent l'héritage même si une règle tierce écrase la
+ * font-family. var(--font-bebas) = source réelle next/font (jamais hardcodé).
+ * ═══════════════════════════════════════════════════════════════════ */
+.font-display,
+[class*="font-display"] {
+  font-family: var(--font-bebas), sans-serif !important;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-bebas), sans-serif;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * BACKGROUND VIVANT — grille de fond + blobs ambiants
+ * Accent via color-mix(var(--accent)) — jamais de rgba hardcodé (règle DA).
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Grille de fond subtile ───────────────────────────────────── */
+.bg-grid {
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--accent) 3%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in srgb, var(--accent) 3%, transparent) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ─── Blob ambiant réutilisable ────────────────────────────────── */
+/*
+ * .blob-ambient — halo flou en dérive lente. La couleur/taille/position
+ * se posent à l'usage (background + dimensions) sur l'élément porteur.
+ * Conteneur parent : position relative + overflow hidden recommandé.
+ */
+.blob-ambient {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: blob-drift 12s ease-in-out infinite alternate;
+}
+
+@keyframes blob-drift {
+  from { transform: translate(0, 0) scale(1); }
+  to   { transform: translate(-30px, 20px) scale(1.1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blob-ambient {
+    animation: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * DEPTH GALLERY — couches scroll (parallax + scale + titre masqué + watermark)
+ * Pilotage des transforms : hook GSAP `useDepthGallery` (hooks/useDepthGallery.ts).
+ * Ces classes ne posent que la structure ; les transforms sont gérés par GSAP.
+ * État de repos (guard touch / reduced-motion) : tout reste visible.
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* Masque le débordement de l'image lors du parallax/scale. */
+.depth-image-wrap {
+  overflow: hidden;
+}
+
+/* Couche image animée (parallax + scale). will-change scopé à l'élément actif. */
+.depth-image {
+  will-change: transform;
+}
+
+/* Masque le titre hors de sa fenêtre pour le reveal translateY(100%) → 0. */
+.depth-title-wrap {
+  overflow: hidden;
+}
+
+.depth-title-inner {
+  display: block;
+}
+
+/* Numéro filigrane décoratif — non interactif. */
+.depth-watermark {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * TUTO WIDGETS — steps numérotés, blocs code, badges, callout React
+ * Tokens DA uniquement. --red = token palette (badge « piège »).
+ * ═══════════════════════════════════════════════════════════════════ */
+
+/* ─── Étape de tuto (numéro + contenu) ─────────────────────────── */
+.step {
+  display: grid;
+  grid-template-columns: 3rem 1fr;
+  gap: 1.5rem;
+  padding: 2rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.step-number {
+  font-family: var(--font-display);
+  font-size: 3rem;
+  color: color-mix(in srgb, var(--accent) 20%, transparent);
+  line-height: 1;
+}
+
+.step-comment {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--accent);
+  margin-bottom: 0.75rem;
+}
+
+.step-code {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  color: var(--text);
+  background: var(--surface2);
+  padding: 1rem 1.5rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  border-left: 2px solid color-mix(in srgb, var(--accent) 30%, transparent);
+}
+
+/* ─── Badges de statut éditorial ───────────────────────────────── */
+.badge-piege {
+  background: color-mix(in srgb, var(--red) 10%, transparent);
+  color: var(--red);
+  border: 1px solid color-mix(in srgb, var(--red) 30%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.badge-fix {
+  background: color-mix(in srgb, var(--accent) 10%, transparent);
+  color: var(--accent);
+  border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+.badge-optim {
+  background: var(--surface2);
+  color: var(--muted2);
+  border: 1px solid var(--border);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  letter-spacing: 0.14em;
+  padding: 0.2rem 0.6rem;
+  border-radius: 2px;
+  text-transform: uppercase;
+  display: inline-block;
+}
+
+/* ─── Callout React (encadré accent) ───────────────────────────── */
+.react-callout {
+  background: var(--surface);
+  border: 1px solid color-mix(in srgb, var(--accent) 20%, transparent);
+  border-left: 3px solid var(--accent);
+  padding: 1.5rem;
+  margin-top: 1.5rem;
+  border-radius: 4px;
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+ * NEON PULSE — halo pulsé (opt-in via .chopper-glow)
+ * Coupé sous prefers-reduced-motion (opacité figée).
+ * ═══════════════════════════════════════════════════════════════════ */
+@keyframes neon-pulse {
+  0%, 100% { opacity: 0.8; }
+  50%      { opacity: 1; }
+}
+
+.chopper-glow {
+  animation: neon-pulse 3s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chopper-glow {
+    animation: none;
+    opacity: 0.8;
+  }
 }

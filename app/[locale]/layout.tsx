@@ -20,20 +20,11 @@ import Nav from '@/components/blocks/Nav'
 import Footer from '@/components/blocks/Footer'
 import { NoiseOverlay } from '@/components/ui/NoiseOverlay'
 import { Cursor } from '@/components/ui/Cursor'
+import { LenisProvider } from '@/components/motion/LenisProvider'
+import { CursorProvider } from '@/components/motion/CursorContext'
+import { PageTransitions } from '@/components/motion/PageTransitions'
+import { DoorTransition } from '@/components/motion/DoorTransition'
 import '../globals.css'
-
-// ─── Placeholders ────────────────────────────────────────────────────────────
-// LenisProvider  → swap with real Lenis smooth-scroll provider (NOVA)
-// CursorProvider → swap with components/ui/Cursor context provider (NOVA)
-// ─────────────────────────────────────────────────────────────────────────────
-
-function LenisProvider({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
-}
-
-function CursorProvider({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
-}
 
 // ─── Fonts ───────────────────────────────────────────────────────────────────
 
@@ -129,13 +120,16 @@ export default async function LocaleLayout({
   const messages = await getMessages()
 
   return (
-    <html lang={locale} className={`${fontVars} antialiased`}>
+    <html lang={locale} data-scroll-behavior="smooth" className={`${fontVars} antialiased`}>
       <body>
         <NextIntlClientProvider messages={messages}>
           <LenisProvider>
             <CursorProvider>
+              <DoorTransition />
               <Nav />
-              <main>{children}</main>
+              <PageTransitions>
+                <main>{children}</main>
+              </PageTransitions>
               <Footer />
             </CursorProvider>
           </LenisProvider>

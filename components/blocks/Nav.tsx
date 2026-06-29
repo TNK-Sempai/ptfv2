@@ -32,26 +32,33 @@ export default function Nav() {
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
+  // Préfixe locale — fr (défaut) sans préfixe, autres locales préfixées.
+  const lp = (path: string) => (locale === 'fr' ? path : `/${locale}${path}`)
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-border bg-bg/80 backdrop-blur-sm">
       <nav aria-label="Navigation principale" className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
 
         {/* Logo */}
-        <Link href="/" className="font-display text-2xl tracking-widest text-accent">
+        <Link href={lp('/')} className="font-display text-2xl tracking-widest text-accent">
           TANUKI
         </Link>
 
         {/* Desktop links */}
         <ul className="hidden lg:flex items-center gap-8 text-sm text-muted2">
           <li>
-            <Link href="/about" aria-current={isActive(pathname, '/about') ? 'page' : undefined} className="transition-colors hover:text-text">
+            <Link href={lp('/about')} aria-current={isActive(pathname, '/about') ? 'page' : undefined} className="transition-colors hover:text-text">
               {t('about')}
             </Link>
           </li>
 
-          {/* Projets — dropdown hover */}
+          {/* Projets — Link cliquable + dropdown hover */}
           <li className="group relative">
-            <span aria-haspopup="true" className="flex cursor-default select-none items-center gap-1 transition-colors group-hover:text-text">
+            <Link
+              href={lp('/projects')}
+              aria-current={isActive(pathname, '/projects') ? 'page' : undefined}
+              className="flex select-none items-center gap-1 transition-colors group-hover:text-text"
+            >
               {t('projects')}
               <svg
                 width="10" height="6" viewBox="0 0 10 6"
@@ -60,14 +67,14 @@ export default function Nav() {
               >
                 <path d="M0 0l5 6 5-6z" />
               </svg>
-            </span>
+            </Link>
 
             <div className="invisible absolute left-1/2 top-full -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:visible group-hover:opacity-100">
               <ul className="min-w-[200px] rounded-lg border border-border bg-surface2 p-2 shadow-2xl">
                 {PROJECTS.map(({ key, slug }) => (
                   <li key={key}>
                     <Link
-                      href={`/projects/${slug}`}
+                      href={lp(`/projects/${slug}`)}
                       aria-current={isActive(pathname, `/projects/${slug}`) ? 'page' : undefined}
                       className="block rounded px-3 py-2 text-sm text-muted2 transition-colors hover:bg-surface hover:text-text"
                     >
@@ -80,17 +87,17 @@ export default function Nav() {
           </li>
 
           <li>
-            <Link href="/skills" aria-current={isActive(pathname, '/skills') ? 'page' : undefined} className="transition-colors hover:text-text">
+            <Link href={lp('/skills')} aria-current={isActive(pathname, '/skills') ? 'page' : undefined} className="transition-colors hover:text-text">
               {t('skills')}
             </Link>
           </li>
           <li>
-            <Link href="/widgets" aria-current={isActive(pathname, '/widgets') ? 'page' : undefined} className="transition-colors hover:text-text">
+            <Link href={lp('/widgets')} aria-current={isActive(pathname, '/widgets') ? 'page' : undefined} className="transition-colors hover:text-text">
               {t('widgets')}
             </Link>
           </li>
           <li>
-            <Link href="/contact" aria-current={isActive(pathname, '/contact') ? 'page' : undefined} className="transition-colors hover:text-text">
+            <Link href={lp('/contact')} aria-current={isActive(pathname, '/contact') ? 'page' : undefined} className="transition-colors hover:text-text">
               {t('contact')}
             </Link>
           </li>
@@ -116,16 +123,25 @@ export default function Nav() {
             </Link>
           </div>
 
-          {/* Hamburger — mobile only */}
+          {/* Hamburger — mobile only : 2 lignes asymétriques → croix */}
           <button
             onClick={() => setMenuOpen((v) => !v)}
-            aria-label="Menu"
+            aria-label={menuOpen ? 'Fermer le menu' : 'Ouvrir le menu'}
             aria-expanded={menuOpen}
-            className="flex flex-col items-center justify-center gap-[5px] lg:hidden"
+            className="group relative h-6 w-6 lg:hidden"
           >
-            <span className={`block h-px w-6 origin-center bg-text transition-transform duration-300 ${menuOpen ? 'translate-y-[6px] rotate-45' : ''}`} />
-            <span className={`block h-px w-6 bg-text transition-opacity duration-300 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block h-px w-6 origin-center bg-text transition-transform duration-300 ${menuOpen ? '-translate-y-[6px] -rotate-45' : ''}`} />
+            {/* Ligne 1 — 24px, pivote en \ à l'ouverture */}
+            <span
+              className={`absolute left-0 block h-[1.5px] w-6 rounded-xs bg-text transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+                menuOpen ? 'top-1/2 -translate-y-1/2 rotate-45' : 'top-2.25'
+              }`}
+            />
+            {/* Ligne 2 — 16px décalée à droite ; s'étend à 24px au hover, pivote en / à l'ouverture */}
+            <span
+              className={`absolute right-0 block h-[1.5px] rounded-xs bg-text transition-all duration-400 ease-[cubic-bezier(0.76,0,0.24,1)] ${
+                menuOpen ? 'top-1/2 w-6 -translate-y-1/2 -rotate-45' : 'top-3.75 w-4 group-hover:w-6'
+              }`}
+            />
           </button>
         </div>
       </nav>
@@ -138,17 +154,24 @@ export default function Nav() {
       >
         <ul className="flex flex-col gap-1 bg-surface px-6 py-4 text-sm text-muted2">
           <li>
-            <Link href="/about" onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/about') ? 'page' : undefined} className="block py-2 hover:text-text">
+            <Link href={lp('/about')} onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/about') ? 'page' : undefined} className="block py-2 hover:text-text">
               {t('about')}
             </Link>
           </li>
           <li className="py-2">
-            <span className="block pb-2 text-xs uppercase tracking-widest text-muted">{t('projects')}</span>
+            <Link
+              href={lp('/projects')}
+              onClick={() => setMenuOpen(false)}
+              aria-current={isActive(pathname, '/projects') ? 'page' : undefined}
+              className="block pb-2 text-xs uppercase tracking-widest text-muted hover:text-text"
+            >
+              {t('projects')}
+            </Link>
             <ul className="ml-4 flex flex-col gap-1">
               {PROJECTS.map(({ key, slug }) => (
                 <li key={key}>
                   <Link
-                    href={`/projects/${slug}`}
+                    href={lp(`/projects/${slug}`)}
                     onClick={() => setMenuOpen(false)}
                     aria-current={isActive(pathname, `/projects/${slug}`) ? 'page' : undefined}
                     className="block py-1 hover:text-text"
@@ -160,17 +183,17 @@ export default function Nav() {
             </ul>
           </li>
           <li>
-            <Link href="/skills" onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/skills') ? 'page' : undefined} className="block py-2 hover:text-text">
+            <Link href={lp('/skills')} onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/skills') ? 'page' : undefined} className="block py-2 hover:text-text">
               {t('skills')}
             </Link>
           </li>
           <li>
-            <Link href="/widgets" onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/widgets') ? 'page' : undefined} className="block py-2 hover:text-text">
+            <Link href={lp('/widgets')} onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/widgets') ? 'page' : undefined} className="block py-2 hover:text-text">
               {t('widgets')}
             </Link>
           </li>
           <li>
-            <Link href="/contact" onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/contact') ? 'page' : undefined} className="block py-2 hover:text-text">
+            <Link href={lp('/contact')} onClick={() => setMenuOpen(false)} aria-current={isActive(pathname, '/contact') ? 'page' : undefined} className="block py-2 hover:text-text">
               {t('contact')}
             </Link>
           </li>

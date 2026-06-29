@@ -7,7 +7,7 @@
 
 ## PROJET
 Reconstruction complète du portfolio tanuki-corporation.com.
-Next.js 14+ App Router + TypeScript + Tailwind + Framer Motion + GSAP + Lenis + Vercel + Notion CMS.
+Next.js 16.2.9 (Turbopack) App Router + TypeScript + Tailwind + Framer Motion + GSAP + Lenis + Vercel + Notion CMS.
 Niveau visuel Awwwards. Portfolio dev senior + blog "1001 Widgets" pour devs juniors FR.
 
 ---
@@ -58,7 +58,7 @@ Fichiers NON touchés : [si risque de confusion]
 ## STACK TECHNIQUE
 
 ```
-Next.js 14+     App Router, TypeScript strict, pas de Pages Router
+Next.js 16.2.9 (Turbopack)  App Router, TypeScript strict, pas de Pages Router
 Tailwind CSS    tokens DA dans globals.css, mobile-first
 Framer Motion   page transitions, variants centralisés dans variants.ts
 GSAP            SplitText (gratuit), ScrollTrigger — cleanup obligatoire

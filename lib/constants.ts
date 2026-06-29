@@ -43,6 +43,8 @@ export const COMMENT_MESSAGE_MAX      = 1000
 export const RATE_LIMIT_MAX           = 3
 export const RATE_LIMIT_WINDOW_MS     = 60 * 60 * 1000
 export const SUGGESTION_VOTE_THRESHOLD = 10
+export const SUGGESTION_TITLE_MAX        = 100
+export const SUGGESTION_DESCRIPTION_MAX  = 500
 
 // ─── Design System — DA_TOKENS (référence CSS variables) ─────────────────────
 // Source de vérité : globals.css — ces valeurs sont la référence JS/TS uniquement
@@ -92,8 +94,8 @@ export const IMG = {
     'time-event':   '/img/time-event-cover.webp',
   },
   PORTRAIT:   '/img/portrait.webp',
-  OG_DEFAULT: '/img/og-default.webp',
-  LOGO:       '/img/tanuki-logo.svg',
+  OG_DEFAULT: '/img/og-image.webp',
+  LOGO:       '/img/tnk-logo.webp',
 } as const
 
 // ─── PROJECTS — données statiques des 5 projets ───────────────────────────────
@@ -104,7 +106,7 @@ export const PROJECTS = [
   {
     slug:        'tanukichessbot',
     title:       'TanukiChessBot',
-    description: 'Bot Twitch interactif jouant aux échecs 24/7 sur Lichess. Les viewers votent les coups en temps réel via le chat.',
+    description: 'Bot IA qui joue aux échecs en stream 24/7 : Stockfish calcule, un LLM local commente à voix haute et un avatar 3D réagit en direct sur Twitch.',
     tags:        ['Python', 'IA', 'Twitch', 'Lichess', 'Chess'],
     year:        2023,
     status:      'live' as const,
@@ -115,8 +117,8 @@ export const PROJECTS = [
   {
     slug:        'opti-troc',
     title:       'Opti-Troc',
-    description: 'Marketplace B2B de troc de services entre TPE/PME. Matching intelligent par secteur, contrats dématérialisés et suivi en temps réel.',
-    tags:        ['Next.js', 'TypeScript', 'B2B', 'Marketplace', 'SaaS'],
+    description: 'Plateforme B2B d\'échange et de revente de matériel optique entre professionnels : authentification robuste, gestion d\'annonces et messagerie intégrée.',
+    tags:        ['Next.js', 'TypeScript', 'B2B', 'Marketplace', 'Sécurité'],
     year:        2024,
     status:      'live' as const,
     coverImage:  IMG.PROJECTS['opti-troc'],
@@ -126,8 +128,8 @@ export const PROJECTS = [
   {
     slug:        'yummr',
     title:       'Yummr',
-    description: 'App mobile de découverte culinaire. Swipe de plats, recommandations IA selon tes goûts, géolocalisation des restaurants.',
-    tags:        ['React Native', 'TypeScript', 'App Mobile', 'IA', 'Expo'],
+    description: 'Le Tinder des recettes : swipez les plats, matchez ceux qui vous tentent et décidez à deux sans débat interminable devant le frigo.',
+    tags:        ['React Native', 'Next.js', 'shadcn/ui'],
     year:        2024,
     status:      'wip' as const,
     coverImage:  IMG.PROJECTS['yummr'],
@@ -137,8 +139,8 @@ export const PROJECTS = [
   {
     slug:        'big-factory',
     title:       'Big Factory',
-    description: 'Plateforme SaaS de gestion de production industrielle. Dashboard temps réel, alertes automatiques et reporting PDF avancé.',
-    tags:        ['Next.js', 'TypeScript', 'shadcn/ui', 'SaaS', 'Dashboard'],
+    description: 'Site vitrine d\'une association culturelle active entre Bruxelles et Paris. Design system robuste sous shadcn/ui pour mettre en valeur événements et projets artistiques.',
+    tags:        ['Next.js', 'TypeScript', 'shadcn/ui'],
     year:        2024,
     status:      'live' as const,
     coverImage:  IMG.PROJECTS['big-factory'],
@@ -148,8 +150,8 @@ export const PROJECTS = [
   {
     slug:        'time-event',
     title:       'Time-Event.ch',
-    description: 'Solution billetterie complète pour événements en Suisse. Google Ads intégré, paiement sécurisé et QR codes de contrôle d\'accès.',
-    tags:        ['Web', 'Billetterie', 'Google Ads', 'Suisse', 'E-commerce'],
+    description: 'Billetterie en ligne pour le Théâtre du Martolet : suivi des conversions, campagnes Google Ads et Consent Mode v2 — conformité RGPD de bout en bout.',
+    tags:        ['Web', 'Google Ads', 'Billetterie', 'Consent Mode v2'],
     year:        2023,
     status:      'live' as const,
     coverImage:  IMG.PROJECTS['time-event'],

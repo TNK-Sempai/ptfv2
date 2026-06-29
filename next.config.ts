@@ -4,6 +4,8 @@ import createNextIntlPlugin from 'next-intl/plugin'
 const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 
 const nextConfig: NextConfig = {
+  // Désactive l'indicateur "N" de dev (Next.js 16 : false | { position }).
+  devIndicators: false,
   async headers() {
     return [
       {

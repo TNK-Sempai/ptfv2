@@ -7,7 +7,31 @@
       "Bash(node -e \"const {getRequestConfig} = require\\('next-intl/server'\\); console.log\\(getRequestConfig.toString\\(\\).slice\\(0,200\\)\\)\")",
       "Bash(node -e \"const {defineRouting} = require\\('next-intl/routing'\\); console.log\\(typeof defineRouting\\)\")",
       "Bash(npx tsc *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "Bash(mkdir -p \"app/[locale]/projects/tanukichessbot\")",
+      "Bash(npx eslint *)",
+      "Bash(echo \"EXIT: $?\")",
+      "Bash(timeout 120 npx next build)",
+      "Bash(npx next *)",
+      "Bash(sed -n '1,60p' lib/metadata.ts)",
+      "Bash(sed -n '1,30p' \"app/[locale]/contact/page.tsx\")",
+      "Bash(node -e \"const m=require\\('./messages/fr.json'\\); console.log\\(JSON.stringify\\(m.widgets,null,2\\)\\)\")",
+      "Bash(sed -n '1,40p' \"app/[locale]/contact/ContactContent.tsx\")",
+      "Bash(sed -n '/interface CommentInput/,/}/p' lib/types.ts)",
+      "Bash(node -e \"console.log\\('shiki', require\\('shiki/package.json'\\).version\\)\")",
+      "Bash(node -e \"JSON.parse\\(require\\('fs'\\).readFileSync\\('messages/fr.json','utf8'\\)\\); JSON.parse\\(require\\('fs'\\).readFileSync\\('messages/en.json','utf8'\\)\\); console.log\\('JSON OK'\\)\")",
+      "Bash(node -e \"console.log\\(require\\('next/package.json'\\).version\\)\")",
+      "Bash(node -e \"console.log\\('gsap', require\\('gsap/package.json'\\).version\\)\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code} -> %{redirect_url}\\\\n\" http://localhost:3000/fr/about)",
+      "Bash(curl -sL -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:3000/fr/about)",
+      "Bash(curl -sL http://localhost:3000/fr/about)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/_next/image?url=%2Fimg%2Fportrait.webp&w=1080&q=75\")",
+      "Bash(node -e \"console.log\\(require\\('framer-motion/package.json'\\).version\\)\")",
+      "Bash(echo \"EXIT=$?\")"
+    ],
+    "additionalDirectories": [
+      "/Users/tanukisempai/portfolioV2/ptfv2/app/[locale]/projects/tanukichessbot",
+      "/tmp"
     ]
   }
 }

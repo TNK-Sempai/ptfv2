@@ -28,18 +28,20 @@ export function Cursor() {
     const moveDot = (e: MouseEvent) => {
       mouseX = e.clientX
       mouseY = e.clientY
+    }
+
+    // Une seule boucle rAF : dot (position exacte) + ring (interpolé)
+    // écrits dans la même frame → une seule passe de layout.
+    const animate = () => {
       if (dotRef.current) {
         dotRef.current.style.transform = `translate(${mouseX}px, ${mouseY}px)`
       }
-    }
-
-    const animateRing = () => {
       ringX += (mouseX - ringX) * 0.12
       ringY += (mouseY - ringY) * 0.12
       if (ringRef.current) {
         ringRef.current.style.transform = `translate(${ringX}px, ${ringY}px)`
       }
-      rafId = requestAnimationFrame(animateRing)
+      rafId = requestAnimationFrame(animate)
     }
 
     const handleOver = (e: MouseEvent) => {
@@ -60,7 +62,7 @@ export function Cursor() {
     document.addEventListener('mousemove', moveDot)
     document.addEventListener('mouseover', handleOver)
     document.addEventListener('mouseleave', handleLeave)
-    rafId = requestAnimationFrame(animateRing)
+    rafId = requestAnimationFrame(animate)
 
     return () => {
       document.removeEventListener('mousemove', moveDot)
@@ -83,7 +85,7 @@ export function Cursor() {
       >
         <div
           className={[
-            'rounded-full bg-[var(--accent)] transition-all duration-150',
+            'rounded-full bg-accent transition-all duration-150',
             state === 'default' ? 'h-2 w-2' : '',
             state === 'hover'   ? 'h-1 w-1 opacity-0' : '',
             state === 'text'    ? 'h-4 w-0.5 rounded-none' : '',
@@ -101,11 +103,11 @@ export function Cursor() {
       >
         <div
           className={[
-            'rounded-full border border-[var(--accent)]/40 transition-all duration-200',
+            'rounded-full border border-accent/40 transition-all duration-200',
             state === 'default' ? 'h-8 w-8' : '',
-            state === 'hover'   ? 'h-12 w-12 bg-[var(--accent)]/10' : '',
+            state === 'hover'   ? 'h-12 w-12 bg-accent/10' : '',
             state === 'text'    ? 'h-6 w-6 opacity-40' : '',
-            state === 'drag'    ? 'h-16 w-16 bg-[var(--accent)]/5' : '',
+            state === 'drag'    ? 'h-16 w-16 bg-accent/5' : '',
           ].join(' ')}
         />
       </div>

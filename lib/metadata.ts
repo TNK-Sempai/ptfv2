@@ -34,8 +34,8 @@ export function buildMetadata({
     metadataBase: new URL(SITE_URL),
     robots: { index: true, follow: true },
     icons: {
-      icon: '/favicon.ico',
-      apple: '/apple-icon.png',
+      icon: [{ url: '/img/favicon.webp', type: 'image/webp' }],
+      apple: '/img/favicon.webp',
     },
     openGraph: {
       type: 'website',
