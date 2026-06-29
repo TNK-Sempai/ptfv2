@@ -7,10 +7,18 @@
 // ─── Routes studio ───────────────────────────────────────────────────────────
 
 export const STUDIO_ROUTES = {
-  ROOT:     '/studio',
-  LOGIN:    '/studio/login',
-  API_AUTH: '/api/studio/auth',
+  ROOT:            '/studio',
+  LOGIN:           '/studio/login',
+  API_AUTH:        '/api/studio/auth',
+  API_JARVIS_CHAT: '/api/studio/jarvis/chat',
+  /** Path du cookie de session — '/' pour couvrir cockpit ET routes /api/studio/*. */
+  COOKIE_PATH:     '/',
 } as const
+
+/** Bleu hologramme du raton Jarvis — spécifique cockpit (hors palette DA publique). */
+export const JARVIS_HOLO_BLUE = '#00b4ff'
+/** Or des lunettes victoriennes du raton Jarvis. */
+export const JARVIS_GOLD = '#d4af37'
 
 /** Clé de query du slug caché : /studio/login?key=<STUDIO_SLUG>. */
 export const STUDIO_SLUG_PARAM = 'key'

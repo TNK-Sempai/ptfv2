@@ -2,6 +2,7 @@
 // Grille d'état des 11 projets + KPIs. Données réelles (statuts/finances/alertes)
 // branchées sur Supabase à une étape ultérieure — ici tout est statique.
 
+import JarvisPanel from '@/components/studio/jarvis/JarvisPanel'
 import {
   STATUS_COLORS,
   STUDIO_PROJECTS,
@@ -27,6 +28,9 @@ function projectStatus(project: (typeof STUDIO_PROJECTS)[number]): ProjectStatus
 export default function StudioSituationPage() {
   return (
     <div className="bg-grid min-h-full p-6">
+      {/* Jarvis — assistant du cockpit (en tête de la Vue Situation) */}
+      <JarvisPanel className="mb-8" />
+
       {/* KPIs */}
       <section className="grid grid-cols-2 gap-px overflow-hidden rounded-lg border border-border bg-border lg:grid-cols-4">
         {KPIS.map((kpi) => (

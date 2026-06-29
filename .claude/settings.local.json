@@ -28,7 +28,9 @@
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/_next/image?url=%2Fimg%2Fportrait.webp&w=1080&q=75\")",
       "Bash(node -e \"console.log\\(require\\('framer-motion/package.json'\\).version\\)\")",
       "Bash(echo \"EXIT=$?\")",
-      "Bash(echo \"exit: $?\")"
+      "Bash(echo \"exit: $?\")",
+      "Bash(cat \"c:/Users/tanuki/Desktop/ptfv2/lib/studio/jarvis.ts\" 2>/dev/null; echo \"===SEARCH HTML===\"; find \"c:/Users/tanuki\" -iname \"jarvis-option*\" 2>/dev/null | head; echo \"===CHAT ROUTE===\"; ls \"c:/Users/tanuki/Desktop/ptfv2/app/api/studio/auth\" 2>/dev/null; find \"c:/Users/tanuki/Desktop/ptfv2/app/api/studio\" -type f 2>/dev/null)",
+      "Read(//c/Users/tanuki/**)"
     ],
     "additionalDirectories": [
       "/Users/tanukisempai/portfolioV2/ptfv2/app/[locale]/projects/tanukichessbot",

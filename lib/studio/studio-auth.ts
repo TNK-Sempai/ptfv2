@@ -112,7 +112,7 @@ export const studioCookieOptions = {
   httpOnly: true,
   sameSite: 'lax',
   secure: process.env.NODE_ENV === 'production',
-  path: STUDIO_ROUTES.ROOT,
+  path: STUDIO_ROUTES.COOKIE_PATH, // '/' → couvre /studio ET /api/studio/* (sinon 401 sur le chat)
   maxAge: STUDIO_SESSION_MAX_AGE_S,
 } as const
 
