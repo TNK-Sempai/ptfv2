@@ -27,7 +27,8 @@
       "Bash(curl -sL http://localhost:3000/fr/about)",
       "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" \"http://localhost:3000/_next/image?url=%2Fimg%2Fportrait.webp&w=1080&q=75\")",
       "Bash(node -e \"console.log\\(require\\('framer-motion/package.json'\\).version\\)\")",
-      "Bash(echo \"EXIT=$?\")"
+      "Bash(echo \"EXIT=$?\")",
+      "Bash(echo \"exit: $?\")"
     ],
     "additionalDirectories": [
       "/Users/tanukisempai/portfolioV2/ptfv2/app/[locale]/projects/tanukichessbot",
